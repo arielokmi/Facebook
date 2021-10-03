@@ -1,4 +1,4 @@
-import {createContext,useContext,useState,useReducer} from 'react';
+import {createContext,useContext,useState,useReducer, useRef} from 'react';
 import styled from 'styled-components';
 import Comment from './Comment';
 import Profile from './img/Profile.png';
@@ -74,10 +74,18 @@ justify-content:space-around;
 align-items: center;
 `
 
-const CommentContiner = styled.div`
+const CommentContiner = styled.ul`
+padding: 0px;
+margin: 0px;
 display:flex;
 `
 
+const CreateComment = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+
+`
 function Post ({
   id,
   title, 
@@ -87,11 +95,17 @@ function Post ({
   comments,
   likes,
  }){
-
+  
   const PostFunctions = useContext(PostsContext);
   const {CommentSectionToggle,SetCommentSectionToggle} = useState(true) ; 
+  const commentText = useRef();
   function ToggleLikes(){
     PostFunctions.toggleLike(id,'userId');
+    }
+
+    function AddComments(){
+    PostFunctions.addComment(commentText,'userId')
+
     }
  return(
   <PostBody>
@@ -116,11 +130,8 @@ function Post ({
      <AddCommentsAndLikes valid={CommentSectionToggle} >
        <buttom>Comment</buttom>
        <buttom onClick={ToggleLikes}>Like</buttom>
-     </AddCommentsAndLikes>
+    </AddCommentsAndLikes>
    </CommentSection>
-   {<CommentContiner>
-     <input></input>
-     </CommentContiner>}
  </PostBody>
  )
 }

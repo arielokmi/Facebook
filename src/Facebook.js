@@ -40,7 +40,6 @@ function Facebook() {
       }
       setPosts(newPosts)
   }
-
   function addPostInternal(title,name,time,text,idCount) {
       const newPost = {
           title,
